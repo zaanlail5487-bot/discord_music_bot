@@ -1,4 +1,6 @@
 import os
+import imageio_ffmpeg
+FFMPEG_PATH = imageio_ffmpeg.get_ffmpeg_exe()
 import json
 import asyncio
 from threading import Thread
@@ -113,7 +115,7 @@ def play_next(guild_id, voice_client):
     song_info = state.queue.pop(0)
     state.current_title = song_info['title']
 
-    raw_player = discord.FFmpegPCMAudio(song_info['url'], **FFMPEG_OPTIONS)
+    raw_player = discord.FFmpegPCMAudio(song_info['url'], executable=FFMPEG_PATH, **FFMPEG_OPTIONS)
     transformed_player = discord.PCMVolumeTransformer(raw_player, volume=state.volume)
 
     voice_client.play(
