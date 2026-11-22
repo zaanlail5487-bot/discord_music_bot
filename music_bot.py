@@ -43,10 +43,9 @@ YTDL_OPTIONS = {
     'extractor_args': {'youtube': {'player_client': ['android', 'web']}},
 }
 FFMPEG_OPTIONS = {
-    'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+    'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5 -headers "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\r\n"',
     'options': '-vn'
 }
-
 ytdl = yt_dlp.YoutubeDL(YTDL_OPTIONS)
 
 # JSON 永久數據庫設定
