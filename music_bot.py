@@ -1,4 +1,5 @@
 import os
+import sys
 import imageio_ffmpeg
 FFMPEG_PATH = imageio_ffmpeg.get_ffmpeg_exe()
 import json
@@ -118,7 +119,12 @@ def play_next(guild_id, voice_client):
     song_info = state.queue.pop(0)
     state.current_title = song_info['title']
 
-    raw_player = discord.FFmpegPCMAudio(song_info['url'], executable=FFMPEG_PATH, **FFMPEG_OPTIONS)
+    raw_player = discord.FFmpegPCMAudio(
+        song_info['url'],
+        executable=FFMPEG_PATH,
+        stderr=sys.stderr,  # 👈 關鍵！強制把 FFmpeg 的所有錯誤直接印在 Render Logs 上
+        **FFMPEG_OPTIONS
+)
     transformed_player = discord.PCMVolumeTransformer(raw_player, volume=state.volume)
 
     voice_client.play(
