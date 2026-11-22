@@ -31,12 +31,16 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 # YT-DLP 播放優化參數
+COOKIE_PATH = '/etc/secrets/cookies.txt' if os.path.exists('/etc/secrets/cookies.txt') else ('cookies.txt' if os.path.exists('cookies.txt') else None)
+
 YTDL_OPTIONS = {
     'format': 'bestaudio/best',
     'noplaylist': True,
     'quiet': True,
     'default_search': 'ytsearch',
     'source_address': '0.0.0.0',
+    'cookiefile': COOKIE_PATH,
+    'extractor_args': {'youtube': {'player_client': ['android', 'web']}},
 }
 FFMPEG_OPTIONS = {
     'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
